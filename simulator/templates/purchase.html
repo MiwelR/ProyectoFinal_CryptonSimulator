@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %} Compra/Venta/Intercambio de Criptomonedas {% endblock %}
+
+{% block menu %}
+<nav class="navbar">
+    <ul>
+        <li><a href="/">Inicio</a></li>
+        <li class="menudisabled"><a>Simulación</a></li>
+        <li><a href="/status">Estado Inversión</a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h4>Compra/Venta/Intercambio de Criptomonedas</h4>
+    <form action="/purchase" method="POST">
+        {{form.hidden_tag()}}
+        {% if calculo == False %}
+            <table>
+                <tr>
+                    <td>
+                    {{form.from_currency.label}}
+                    {{form.from_currency}}
+                    {{form.from_cantidad.label}}
+                    {{form.from_cantidad}}
+                    {% if form.from_cantidad.errors %}
+                        {% for msg in form.from_cantidad.errors %}
+                            <p class="err-msg">
+                                {{msg}}
+                            </p>
+                        {% endfor %}
+                    {% endif %}
+                    <input type="submit" name="calculator" class="fa fa-calculator" aria-hidden="true" style="font-size:1.8rem" value="&#xf1ec;">
+                    </td>
+                    
+                    <td>
+                    {{form.to_currency.label}}
+                    {{form.to_currency}}
+                    {{form.to_cantidad.label}}
+                    {{form.to_cantidad(readonly="readonly")}}
+
+                    {{form.preciou.label}}
+                    {{form.preciou(readonly="readonly")}}
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <a href="/" class="button button-outline">Volver a Inicio</a>
+                {{form.aceptar(value="Realizar Operación", class="button")}}
+            </div>
+        {% else %}
+            <table>
+                <tr>
+                    <td>
+                    {{form.from_currency.label}}
+                    {{form.from_currency(disabled=True, value=consulta[0])}}
+                    {{form.from_currency(hidden=True, value=consulta[0])}}
+                    {{form.from_cantidad.label}}
+                    {{form.from_cantidad(readonly="readonly", value=consulta[1])}}
+                    <input type="submit" class="fa fa-calculator" aria-hidden="true" style="font-size:1.8rem" value="&#xf1ec;">
+                    </td>
+                    <td>
+                    {{form.to_currency.label}}
+                    {{form.to_currency(disabled=True, value=consulta[2])}}
+                    {{form.to_currency(hidden=True, value=consulta[2])}}
+                    {{form.to_cantidad.label}}
+                    {{form.to_cantidad(readonly="readonly", value=consulta[3])}}
+                    {{form.preciou.label}}
+                    {{form.preciou(readonly="readonly", value=consulta[4])}}
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <a href="/purchase" class="button button-outline">Volver a Calcular</a>
+                {{form.aceptar(value="Realizar Operación", class="button")}}
+            </div>
+        {% endif %}
+    </form>
+{% endblock %}
+                <!-- <input type="submit" class="fa fa-calculator" aria-hidden="true" style="font-size:1.8rem" value="&#xf1ec;">
+                <button type="submit" class="fa fa-calculator"></button>
+                {{form.calculator(value="&#xf1ec;", class_="fa fa-calculator")}} -->
+                <!-- <i class="fa fa-calculator" aria-hidden="true"></i> -->

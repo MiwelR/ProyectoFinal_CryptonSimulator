@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Estado de la Inversión {% endblock %}
+
+{% block menu %}
+<nav class="navbar">
+    <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/purchase">Simulación</a></li>
+        <li class="menudisabled"><a>Estado Inversión</a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h4>Estado de la Inversión</h4>
+<div>
+    {{form.invertido.label}}
+    {{form.invertido(readonly="readonly", value=inversion[0])}}
+</div>
+<div>
+    {{form.vactual.label}}
+    {{form.vactual(readonly="readonly", value=inversion[1])}}
+</div>
+{% endblock %}

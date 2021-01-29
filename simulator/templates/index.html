@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Inicio {% endblock %}
+
+{% block menu %}
+<nav class="navbar">
+    <ul>
+        <li class="menudisabled"><a>Inicio</a></li>
+        <li><a href="/purchase">Simulación</a></li>
+        <li><a href="/status">Estado Inversión</a></li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <h4>Resumen de Movimientos</h4>
+    {% if datos|length > 0 %}
+    <table>
+        <tr>
+            <th>Fecha </th>
+            <th>Hora </th>
+            <th>De </th>
+            <th>Cantidad </th>
+            <th>A </th>
+            <th>Cantidad </th>
+            <th>Precio Unitario </th>
+        </tr>
+        {% for registro in datos %}
+        <tr>
+            <td>{{ registro['date'] }}</td>
+            <td>{{ registro['time'] }}</td>
+            <td>{{ registro['from_currency'] }}</td>
+            <td>{{ registro['from_quantity'] }}</td>
+            <td>{{ registro['to_currency'] }}</td>
+            <td>{{ registro['to_quantity'] }}</td>
+            {% if registro['from_currency'] == "EUR" %}
+                <td>{{ registro['price'] }} €</td>
+            {% else %}
+            <td>{{ registro['price'] }} {{ registro['from_currency'] }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="homebuttons">
+        <p>
+            <a href="/status" class="button">Estado Inversión</a> <a href="/purchase" class="button">Realizar Simulación</a>
+        </p>
+    </div>
+    {% else %}
+    <div>
+        <p>No hay movimientos</p>
+    </div>
+    <div class="homebuttons">
+        <p>
+            <a href="/purchase" class="button">Realiza tu primera Simulación</a>
+        </p>
+    </div>
+    {% endif %}
+{% endblock %}
