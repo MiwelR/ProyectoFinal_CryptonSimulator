@@ -5,17 +5,25 @@
 {% block menu %}
 <nav class="navbar">
     <ul>
-        <li class="menudisabled"><a>Inicio</a></li>
-        <li><a href="/purchase">Simulación</a></li>
-        <li><a href="/status">Estado Inversión</a></li>
+        <li class="menudisabled"><a><i class="fa fa-home" aria-hidden="true"></i>
+            Inicio</a></li>
+        <li><a href="/purchase"><i class="fa fa-exchange" aria-hidden="true"></i>
+            Simulador</a></li>
+        <li><a href="/status"><i class="fa fa-line-chart" aria-hidden="true"></i>
+            Estado Inversión</a></li>
     </ul>
 </nav>
 {% endblock %}
 
 {% block content %}
     <h4>Resumen de Movimientos</h4>
+
+    {% for msg in msgError %}
+        <p class="err-msg">{{msg}}</p>
+    {% endfor %}
+
     {% if datos|length > 0 %}
-    <table>
+    <table class="movimientos">
         <tr>
             <th>Fecha </th>
             <th>Hora </th>
@@ -25,6 +33,7 @@
             <th>Cantidad </th>
             <th>Precio Unitario </th>
         </tr>
+
         {% for registro in datos %}
         <tr>
             <td>{{ registro['date'] }}</td>
@@ -32,11 +41,35 @@
             <td>{{ registro['from_currency'] }}</td>
             <td>{{ registro['from_quantity'] }}</td>
             <td>{{ registro['to_currency'] }}</td>
-            <td>{{ registro['to_quantity'] }}</td>
-            {% if registro['from_currency'] == "EUR" %}
-                <td>{{ registro['price'] }} €</td>
+
+            <!--Formato para cantidad en notación científica en to_cantidad-->
+            {% if 'e' in registro['to_quantity']|string %}
+                <td>{{ '{:f}'.format(registro['to_quantity']) }}</td>
             {% else %}
-            <td>{{ registro['price'] }} {{ registro['from_currency'] }}</td>
+                <td>{{ registro['to_quantity'] }}</td>
+            {% endif %}
+
+            <!--Formato para cantidad en notación científica en precio/u.-->
+            {% if 'e' in registro['price']|string %}
+
+                {% if registro['from_currency'] == "EUR" %}
+                    <td>{{ '{:f}'.format(registro['price']) }} €/{{ registro['to_currency'] }}</td>
+                {% elif registro['to_currency'] == "EUR" %}
+                    <td>{{ '{:f}'.format(registro['price']) }} {{ registro['from_currency'] }}/€</td>
+                {% else %}
+                    <td>{{ '{:f}'.format(registro['price']) }} {{ registro['from_currency'] }}/{{ registro['to_currency'] }}</td>
+                {% endif %}
+
+            {% else %}
+
+                {% if registro['from_currency'] == "EUR" %}
+                    <td>{{ registro['price'] }} €/{{ registro['to_currency'] }}</td>
+                {% elif registro['to_currency'] == "EUR" %}
+                    <td>{{ registro['price'] }} {{ registro['from_currency'] }}/€</td>
+                {% else %}
+                    <td>{{ registro['price'] }} {{ registro['from_currency'] }}/{{ registro['to_currency'] }}</td>
+                {% endif %}
+
             {% endif %}
         </tr>
         {% endfor %}
@@ -47,13 +80,16 @@
         </p>
     </div>
     {% else %}
-    <div>
-        <p>No hay movimientos</p>
-    </div>
-    <div class="homebuttons">
-        <p>
-            <a href="/purchase" class="button">Realiza tu primera Simulación</a>
-        </p>
-    </div>
+
+        {% if msgError == [] %}
+        <div class="dbempty">
+            <h4>Aún no se ha realizado ninguna simulación. ¡Realiza tu primera simulación de compra de criptomonedas!</h4>
+            <div class="first-button">
+                <p>
+                    <a href="/purchase" class="button">Realiza tu primera Simulación</a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
     {% endif %}
 {% endblock %}

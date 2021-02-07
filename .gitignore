@@ -5,5 +5,3 @@ simulator/data/database.db
 venv
 .env
 config.py
-purchase-simulation.html
-pruebas.py

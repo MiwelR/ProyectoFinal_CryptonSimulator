@@ -4,24 +4,72 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CryptOn Simulator - {% block title %}{% endblock %}</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome/css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/milligram.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/contents.css') }}">
     </head>
     <body>
-        <!-- <h2>CRYPT<span>ON</span> SIMULATOR - Simulador de compra/venta de criptomonedas</h2> -->
-        <header class="header">
-            <div class="logo"><img src="../static/images/Logo-CryptOn-Simulator.png" alt="Crypton Simulator"></div>
-        </header>
-        {% block menu %}{% endblock %}
+            <header class="header">
+                <video autoplay muted loop class="video-background" poster="./img/bg.jpg">
+                    <source
+                    src="../static/video/video-header.mp4"
+                    type="video/mp4"
+                    />
+                </video>
+                <div class="logo"><img src="../static/images/logo-white.png" alt="Crypton Simulator"></div>
+            </header>
 
-        <section class="container">
-            {% block content %}{% endblock %}
-        </section>
+            <div>
+            {% block menu %}{% endblock %}
+            </div>
 
-        <footer class="footer">
-            &copy; 2020 - 2021. Todos los derechos reservados.
-        </footer>
+            <nav class="monedero">
+                <ul>
+                    <li class="misaldo"><a>Saldo:</a></li>
+                    {% for saldo in misaldo %}
+                    {% if saldo == "EUR" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/eur.svg" alt="Crypton Simulator"></span><a> {{saldo}}: &infin;</a></li>
+                    {% elif saldo == "BTC" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/btc.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "ETH" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/eth.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "XRP" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/xrp.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "LTC" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/ltc.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "BCH" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/bch.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "BNB" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/bnb.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "USDT" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/usdt.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "EOS" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/eos.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "BSV" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/bsv.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "XLM" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/xlm.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "ADA" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/ada.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% elif saldo == "TRX" %}
+                    <li><span class="ico-currency"><img class="ico-currency" src="../static/images/icons/trx.png" alt="Crypton Simulator"></span><a> {{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% else %}
+                    <li><a>{{saldo}}: {{misaldo[saldo]}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <section class="container">
+                {% block content %}{% endblock %}
+            </section>
+
+            <footer class="footer">
+                &copy; 2020 - 2021. Todos los derechos reservados.
+            </footer>
     </body>
 </html>

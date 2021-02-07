@@ -5,21 +5,42 @@
 {% block menu %}
 <nav class="navbar">
     <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/purchase">Simulación</a></li>
-        <li class="menudisabled"><a>Estado Inversión</a></li>
+        <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>
+            Inicio</a></li>
+        <li><a href="/purchase"><i class="fa fa-exchange" aria-hidden="true"></i>
+            Simulador</a></li>
+        <li class="menudisabled"><a><i class="fa fa-line-chart" aria-hidden="true"></i>
+            Estado Inversión</a></li>
     </ul>
 </nav>
 {% endblock %}
 
 {% block content %}
 <h4>Estado de la Inversión</h4>
-<div>
+{% for msg in msgError %}
+        <p class="err-msg">{{msg}}</p>
+{% endfor %}
+<div class="status">
+<div class="status-fields">
     {{form.invertido.label}}
-    {{form.invertido(readonly="readonly", value=inversion[0])}}
+    {{form.invertido(readonly="readonly", class="text-status", value=form.invertido.data)}}
 </div>
-<div>
+<div class="status-fields">
     {{form.vactual.label}}
-    {{form.vactual(readonly="readonly", value=inversion[1])}}
+    {{form.vactual(readonly="readonly", class="text-status", value=form.vactual.data)}}
+</div>
+<!-- Control de la ganancia en caso de ser positiva o negativa -->
+<div class="status-fields">
+    {% if form.ganancia.data|float > 0 %}
+    {{form.ganancia.label}}
+    {{form.ganancia(readonly="readonly", class="positivo", value=form.ganancia.data)}}
+    {% else %}
+    {{form.ganancia.label}}
+    {{form.ganancia(readonly="readonly", class="negativo", value=form.ganancia.data)}}
+    {% endif %}
+</div>
+</div>
+<div class="homebuttons">
+    <a href="/" class="button button-outline"><i class="fa fa-home" aria-hidden="true"></i> Volver a Inicio</a>
 </div>
 {% endblock %}

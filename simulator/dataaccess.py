@@ -3,6 +3,7 @@ import sqlite3
 
 DBFILE = app.config['DBFILE']
 
+
 # Función consulta a base de datos:
 def consulta(query, params=()):
     conn = sqlite3.connect(DBFILE)
@@ -32,6 +33,7 @@ def consulta(query, params=()):
 
     return listaDeDiccionarios
 
+
 # Función consulta saldo actual de criptomonedas:
 def saldos(moneda):
         datos = consulta('SELECT from_currency, from_quantity, to_currency, to_quantity FROM movements;')
@@ -44,3 +46,20 @@ def saldos(moneda):
                 cantidad_from += float(i['from_quantity'])
         saldo = cantidad_to - cantidad_from
         return saldo
+
+
+# Función para lista de monedas "From":
+def select_from():
+    # Cálculo de cryptos para el SelectField "From":
+    cryptosList = ['BTC','ETH','XRP','LTC','BCH','BNB','USDT','EOS','BSV','XLM','ADA','TRX']
+    cryptos = {}
+    for i in cryptosList:
+        cryptos[i] = saldos(i)
+    
+    for coin in cryptos:
+        if float(cryptos[coin]) <= 0:
+            cryptosList.remove(coin)
+
+    # Añadiendo Euros por defecto en primera posición:
+    cryptosList.insert(0, 'EUR')
+    return cryptosList

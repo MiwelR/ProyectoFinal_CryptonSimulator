@@ -1,0 +1,88 @@
+.header {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+
+.video-background {
+    height: 145px;
+}
+
+.logo {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    position: absolute;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000000b8;
+}
+
+.navbar li {
+    float: left;
+    margin-bottom: 0;
+}
+
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar li a:hover {
+    background-color: #16a3ce;
+}
+
+.menudisabled {
+    background-color: #16a3ce;
+}
+
+.monedero {
+    margin-bottom: 5rem;
+    border-top: groove;
+    border-bottom: groove;
+    border-color: steelblue;
+}
+
+.monedero ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0.5rem 0.5rem;
+    overflow: hidden;
+    background-color: #444;
+}
+
+.monedero li {
+    float: left;
+    margin-bottom: 0;
+    display: contents;
+}
+
+.monedero li a {
+    display: block;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 0px 1rem;
+    text-decoration: none;
+    padding-left: 2px;
+    font-weight: bold;
+}
+
+.ico-currency {
+    width: 16px;
+    height: 16px;
+}
